@@ -1,0 +1,17 @@
+﻿@model NoSQL.UI.ViewModels.UserViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>
+    @if (Model != null)
+    {
+        @Model.Name
+    }
+    else
+    {
+        <text>Null</text>
+    }
+</h2>
