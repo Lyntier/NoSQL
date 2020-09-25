@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+// ReSharper disable once InvalidXmlDocComment
+/// <summary> Contains all classes responsible for displaying the Web Application. </summary>
 namespace NoSQL.UI
 {
     public class Startup

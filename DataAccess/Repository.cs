@@ -7,6 +7,7 @@ using NoSQL.Models.Util;
 
 namespace NoSQL.DataAccess
 {
+    /// <inheritdoc cref="IRepository{TEntity}"/>
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         private readonly IMongoCollection<TEntity> _collection;
@@ -30,26 +31,31 @@ namespace NoSQL.DataAccess
 
         #region Interface methods
 
+        /// <inheritdoc cref="IRepository{TEntity}"/>
         public TEntity Get(string id)
         {
             return _collection.Find(e => e.Id.Equals(id)).SingleOrDefault();
         }
 
+        /// <inheritdoc cref="IRepository{TEntity}"/>
         public IEnumerable<TEntity> GetAll()
         {
             return _collection.AsQueryable();
         }
 
+        /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Add(TEntity entity)
         {
             _collection.InsertOne(entity);
         }
 
+        /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Update(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Delete(TEntity entity)
         {
             throw new NotImplementedException();

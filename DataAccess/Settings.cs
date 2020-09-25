@@ -1,3 +1,5 @@
+// ReSharper disable once InvalidXmlDocComment
+/// <summary> Contains all classes needed to access data from the database. </summary>
 namespace NoSQL.DataAccess
 {
     /// <summary> Interface needed for Dependency Injection into this class library. </summary>

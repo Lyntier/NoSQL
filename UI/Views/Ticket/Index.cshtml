@@ -31,6 +31,7 @@
 <br/>
 @await Html.PartialAsync("Partial/CreateTicket", new TicketViewModel())
 
+@* Easy segment for showing any potential modelstate errors *@
 @foreach (var modelState in ViewData.ModelState.Values)
 {
     @foreach (var error in modelState.Errors)

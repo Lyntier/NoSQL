@@ -8,6 +8,10 @@ using NoSQL.DataAccess;
 using NoSQL.Models;
 using NoSQL.Services;
 
+// ReSharper disable once InvalidXmlDocComment
+/// <summary>
+/// Contains all classes related to processing API requests of the application, both internal and external.
+/// </summary>
 namespace NoSQL.API
 {
     public class Startup

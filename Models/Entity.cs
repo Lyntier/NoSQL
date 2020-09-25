@@ -5,20 +5,26 @@ using MongoDB.Bson.Serialization.Attributes;
 /// <summary> Contains the different entities that are used in the solution. </summary>
 namespace NoSQL.Models
 {
-    public interface IEntity
-    {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        string Id { get; set; }
-    }
     
     /// <summary>
     /// Represents an Entity within the application. Entities are classes
     /// which will be stored as JSON objects in the Mongo database.
     /// </summary>
+    public interface IEntity
+    {
+        /// <summary>
+        /// String representation of the ObjectID of an entity in the database.
+        /// </summary>
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        string Id { get; set; }
+    }
+    
+    /// <inheritdoc cref="IEntity"/>
     public abstract class Entity : IEntity
     {
-        /// <summary> The unique identifier of an entity in the database. </summary>
+        
+        /// <inheritdoc cref="IEntity"/>
         public string Id { get; set; }
     }
 }

@@ -7,12 +7,18 @@ using NoSQL.UI.ViewModels;
 
 namespace NoSQL.UI.Controllers
 {
+    /// <summary>
+    /// Handles all requests fired by the web application with regards to Tickets.
+    /// </summary>
     public class TicketController : ControllerBase
     {
         public TicketController(ILogger<HomeController> logger) : base(logger)
         {
         }
 
+        /// <summary>
+        /// Shows all tickets in the database and allows the addition of tickets.
+        /// </summary>
         [HttpGet]
         public IActionResult Index()
         {
@@ -46,6 +52,9 @@ namespace NoSQL.UI.Controllers
             return View(ticketvm);
         }
 
+        /// <summary>
+        /// Inserts a new ticket into the database with values set according to the values in the Html form.
+        /// </summary>
         [HttpPost]
         public IActionResult CreateTicket(TicketViewModel ticketvm)
         {

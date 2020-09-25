@@ -4,6 +4,9 @@ using NoSQL.Models;
 
 namespace NoSQL.UI.ViewModels
 {
+    /// <summary>
+    /// Allows the conversion of the Ticket model to a user-friendly format.
+    /// </summary>
     public class TicketViewModel
     {
         public TicketViewModel()
