@@ -1,3 +1,5 @@
+// ReSharper disable once InvalidXmlDocComment
+/// <summary> Contains all view models used in the UI project to display data in a user-friendly format. </summary>
 namespace NoSQL.UI.ViewModels
 {
     /// <summary>

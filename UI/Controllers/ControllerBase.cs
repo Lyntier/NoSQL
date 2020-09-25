@@ -3,6 +3,8 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
+// ReSharper disable once InvalidXmlDocComment
+/// <summary> Contains controllers responsible for creating and directing views towards the user. </summary>
 namespace NoSQL.UI.Controllers
 {
     /// <summary>

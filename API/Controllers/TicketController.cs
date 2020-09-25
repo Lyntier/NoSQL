@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using NoSQL.Models;
 using NoSQL.Services;
 
+// ReSharper disable once InvalidXmlDocComment
+/// <summary> Contains all controllers in the API. </summary>
 namespace NoSQL.API.Controllers
 {
     /// <summary> Takes care of API calls related to tickets. </summary>

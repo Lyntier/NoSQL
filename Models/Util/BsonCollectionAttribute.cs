@@ -1,5 +1,7 @@
 using System;
 
+// ReSharper disable once InvalidXmlDocComment
+/// <summary> Contains utility classes for the Models project. </summary>
 namespace NoSQL.Models.Util
 {
     /// <summary>
