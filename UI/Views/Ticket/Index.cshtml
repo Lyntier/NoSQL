@@ -1,0 +1,45 @@
+@using System.Globalization
+@using System.Linq
+@model IEnumerable<TicketViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Tickets</h2>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Subject</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var ticket in Model)
+    {
+        <tr>
+            <td>@ticket.Id</td>
+            <td>@ticket.Subject</td>
+            <td>@ticket.LastName, @ticket.FirstName</td>
+            <td>@ticket.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+            <td>@ticket.Status</td>
+        </tr>
+    }
+</table>
+
+<br/>
+<br/>
+<form asp-controller="Ticket" asp-action="Index" method="post">
+    first name: <input asp-for="SingleOrDefault().FirstName"><br/>
+    last name: <input asp-for="SingleOrDefault().LastName"><br/>
+    subject: <input asp-for="SingleOrDefault().Subject"><br/>
+    status: <input asp-for="SingleOrDefault().Status"><br/>
+    date: <input asp-for="SingleOrDefault().Date"><br/>
+    <button type="submit">Create entry</button>
+</form>
+
+@if (ViewData.ModelState.ErrorCount != 0)
+{
+    <text>There was an error processing this request.</text>
+}

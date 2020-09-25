@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using NoSQL.DataAccess;
+using NoSQL.Models;
+using NoSQL.Services;
 
 namespace NoSQL.API
 {
@@ -19,6 +23,28 @@ namespace NoSQL.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region settings
+
+            // Required to inject connection string into DataAccess class library.
+            services.Configure<Settings>(Configuration.GetSection("MongoDbSettings"));
+
+            services.AddSingleton<ISettings>(serviceProvider =>
+                serviceProvider.GetRequiredService<IOptions<Settings>>().Value);
+
+            #endregion
+
+            #region repositories
+
+            services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+
+            #endregion
+
+            #region services
+
+            services.AddScoped<ITicketService, TicketService>();
+
+            #endregion
+
             services.AddControllers();
         }
 
