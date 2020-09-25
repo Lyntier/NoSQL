@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MongoDB.Driver;
 using NoSQL.Models;
 
 namespace NoSQL.DataAccess

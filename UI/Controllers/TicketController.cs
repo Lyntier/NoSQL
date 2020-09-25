@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
 using NoSQL.Models;
 using NoSQL.UI.ViewModels;
 
@@ -39,32 +37,49 @@ namespace NoSQL.UI.Controllers
                 ticketvm.Add(new TicketViewModel(ticket));
             }
 
+            if (TempData["apiError"] != null)
+            {
+                ModelState.AddModelError("apiError", TempData["apiError"].ToString());
+            }
+
 
             return View(ticketvm);
         }
 
-        [HttpPut]
+        [HttpPost]
         public IActionResult CreateTicket(TicketViewModel ticketvm)
         {
-            Ticket ticket = new Ticket(ticketvm.Subject, ticketvm.FirstName, ticketvm.LastName, ticketvm.Date,
-                ticketvm.Status)
+            Ticket ticket;
+            if (ticketvm.Id != null)
             {
-                Id = new ObjectId(ticketvm.Id)
-            };
+                ticket = new Ticket(ticketvm.Id, ticketvm.Subject, ticketvm.FirstName, ticketvm.LastName, ticketvm.Date,
+                    ticketvm.Status);    
+            }
+            else
+            {
+                ticket = new Ticket(ticketvm.Subject, ticketvm.FirstName, ticketvm.LastName, ticketvm.Date,
+                    ticketvm.Status);
+            }
+            
 
             using (var client = GetHttpClient())
             {
-                var response = client.PutAsJsonAsync<Ticket>("Ticket", ticket);
+                var response = client.PostAsJsonAsync("Ticket", ticket);
                 response.Wait();
 
                 var result = response.Result;
                 if (!result.IsSuccessStatusCode)
                 {
-                    ModelState.AddModelError("apiError", "Something failed.");
+                    TempData["apiError"] = result.Content.ReadAsStringAsync().Result;
+                }
+                else
+                {
+                    TempData["apiError"] = null;
                 }
             }
 
-            return View("Index");
+            
+            return RedirectToAction("Index");
         }
     }
 }

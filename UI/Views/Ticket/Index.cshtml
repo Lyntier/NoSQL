@@ -1,5 +1,4 @@
 @using System.Globalization
-@using System.Linq
 @model IEnumerable<TicketViewModel>
 
 @{
@@ -30,16 +29,12 @@
 
 <br/>
 <br/>
-<form asp-controller="Ticket" asp-action="Index" method="post">
-    first name: <input asp-for="SingleOrDefault().FirstName"><br/>
-    last name: <input asp-for="SingleOrDefault().LastName"><br/>
-    subject: <input asp-for="SingleOrDefault().Subject"><br/>
-    status: <input asp-for="SingleOrDefault().Status"><br/>
-    date: <input asp-for="SingleOrDefault().Date"><br/>
-    <button type="submit">Create entry</button>
-</form>
+@await Html.PartialAsync("Partial/CreateTicket", new TicketViewModel())
 
-@if (ViewData.ModelState.ErrorCount != 0)
+@foreach (var modelState in ViewData.ModelState.Values)
 {
-    <text>There was an error processing this request.</text>
+    @foreach (var error in modelState.Errors)
+    {
+        <text>@error.ErrorMessage</text>
+    }
 }

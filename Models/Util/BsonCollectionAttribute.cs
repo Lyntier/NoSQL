@@ -10,6 +10,7 @@ namespace NoSQL.Models.Util
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class BsonCollectionAttribute : Attribute
     {
+        /// <summary> The plural name that a collection of a specific entity type should use. </summary>
         public string CollectionName { get; }
 
         public BsonCollectionAttribute(string collectionName)

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using NoSQL.Models;
 
 namespace NoSQL.UI.ViewModels
@@ -10,7 +11,7 @@ namespace NoSQL.UI.ViewModels
         }
 
         public TicketViewModel(Ticket ticket)
-            : this(ticket.Id.ToString(), ticket.Subject, ticket.FirstName, ticket.LastName, ticket.Date, ticket.Status)
+            : this(ticket.Id, ticket.Subject, ticket.FirstName, ticket.LastName, ticket.Date, ticket.Status)
         {
         }
 
@@ -24,6 +25,7 @@ namespace NoSQL.UI.ViewModels
             Status = status;
         }
 
+        [ScaffoldColumn(false)]
         public string Id { get; set; }
         public string Subject { get; set; }
         public string FirstName { get; set; }

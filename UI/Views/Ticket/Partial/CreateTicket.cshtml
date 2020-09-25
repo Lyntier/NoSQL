@@ -1,0 +1,17 @@
+﻿@model TicketViewModel
+
+@using (Html.BeginForm("CreateTicket", "Ticket", FormMethod.Post))
+{
+    @Html.EditorForModel()
+    <br /><button type="submit">Create ticket</button>
+}
+
+
+@*<form asp-controller="Ticket" asp-action="CreateTicket" method="post">
+    first name: <input asp-for="FirstName"><br/>
+    last name: <input asp-for="LastName"><br/>
+    subject: <input asp-for="Subject"><br/>
+    status: <input asp-for="Status"><br/>
+    date: <input asp-for="Date"><br/>
+    <button type="submit">Create entry</button>
+</form>*@

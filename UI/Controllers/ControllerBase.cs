@@ -7,7 +7,7 @@ namespace NoSQL.UI.Controllers
 {
     public abstract class ControllerBase : Controller
     {
-        protected const string baseApiUrl = "https://localhost:3001/api/";
+        protected const string BaseApiUrl = "https://localhost:3001/api/";
 
         protected readonly ILogger<HomeController> Logger;
 
@@ -16,6 +16,6 @@ namespace NoSQL.UI.Controllers
             Logger = logger;
         }
 
-        protected HttpClient GetHttpClient() => new HttpClient {BaseAddress = new Uri(baseApiUrl)};
+        protected HttpClient GetHttpClient() => new HttpClient {BaseAddress = new Uri(BaseApiUrl)};
     }
 }

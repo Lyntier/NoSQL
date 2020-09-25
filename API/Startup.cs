@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -44,11 +43,17 @@ namespace NoSQL.API
             services.AddScoped<ITicketService, TicketService>();
 
             #endregion
+            
+            #region database
 
-            services.AddControllers();
+            services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+            
+            #endregion
+
+            services.AddControllers().AddNewtonsoftJson();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary> Configures the HTTP request pipeline. </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -66,7 +71,7 @@ namespace NoSQL.API
             {
                 endpoints.MapControllerRoute(
                     name: "Default",
-                    pattern: "/api/{controller=UserTest}/{action=Index}/{id?}");
+                    pattern: "/api/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

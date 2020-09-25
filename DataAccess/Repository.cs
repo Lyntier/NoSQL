@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using NoSQL.Models;
 using NoSQL.Models.Util;
@@ -10,13 +9,13 @@ namespace NoSQL.DataAccess
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        private readonly IMongoCollection<TEntity> collection;
+        private readonly IMongoCollection<TEntity> _collection;
 
         // Dependency Injection 
         public Repository(ISettings settings)
         {
             var db = new MongoClient(settings.ConnectionString).GetDatabase(settings.DatabaseName);
-            collection = db.GetCollection<TEntity>(GetCollectionName(typeof(TEntity)));
+            _collection = db.GetCollection<TEntity>(GetCollectionName(typeof(TEntity)));
         }
 
         /// <summary> Returns the collection name that's specified in the type's BsonCollection attribute. </summary>
@@ -33,28 +32,27 @@ namespace NoSQL.DataAccess
 
         public TEntity Get(string id)
         {
-            var objectId = new ObjectId(id);
-            return collection.Find(e => e.Id == objectId).SingleOrDefault();
+            return _collection.Find(e => e.Id.Equals(id)).SingleOrDefault();
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return collection.AsQueryable();
+            return _collection.AsQueryable();
         }
 
         public void Add(TEntity entity)
         {
-            throw new System.NotImplementedException();
+            _collection.InsertOne(entity);
         }
 
         public void Update(TEntity entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Delete(TEntity entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using NoSQL.Models;
 using NoSQL.Services;
 
 namespace NoSQL.API.Controllers
 {
+    /// <summary> Takes care of API calls related to tickets. </summary>
+    /// <seealso cref="Ticket"/>
     [ApiController]
     [Route("api/[controller]")]
     public class TicketController : Controller
@@ -22,8 +23,8 @@ namespace NoSQL.API.Controllers
             return Json(_ticketService.ListTickets());
         }
 
-        [HttpPut]
-        public IActionResult Put(Ticket ticket)
+        [HttpPost]
+        public IActionResult Post(Ticket ticket)
         {
             _ticketService.CreateTicket(ticket);
             return Ok();

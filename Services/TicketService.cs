@@ -6,20 +6,20 @@ namespace NoSQL.Services
 {
     public class TicketService : ITicketService
     {
-        private IRepository<Ticket> ticketRepository;
+        private IRepository<Ticket> _ticketRepository;
 
         public TicketService(IRepository<Ticket> ticketRepository)
         {
-            this.ticketRepository = ticketRepository;
+            _ticketRepository = ticketRepository;
         }
         public IEnumerable<Ticket> ListTickets()
         {
-            return ticketRepository.GetAll();
+            return _ticketRepository.GetAll();
         }
 
         public void CreateTicket(Ticket ticket)
         {
-            ticketRepository.Add(ticket);
+            _ticketRepository.Add(ticket);
         }
     }
 }
