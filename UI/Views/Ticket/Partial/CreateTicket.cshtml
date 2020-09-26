@@ -1,0 +1,7 @@
+﻿@model TicketViewModel
+
+@using (Html.BeginForm("CreateTicket", "Ticket", FormMethod.Post))
+{
+    @Html.EditorForModel()
+    <br /><button type="submit">Create ticket</button>
+}

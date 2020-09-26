@@ -1,0 +1,4 @@
+var dir_1c4cf77a5100400b8249f265a4912856 =
+[
+    [ "netcoreapp3.1", "dir_1882811aec3d2b689498f6a3c23f9263.html", "dir_1882811aec3d2b689498f6a3c23f9263" ]
+];

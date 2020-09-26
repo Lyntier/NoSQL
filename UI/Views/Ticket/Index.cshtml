@@ -1,0 +1,41 @@
+@using System.Globalization
+@model IEnumerable<TicketViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Tickets</h2>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Subject</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var ticket in Model)
+    {
+        <tr>
+            <td>@ticket.Id</td>
+            <td>@ticket.Subject</td>
+            <td>@ticket.LastName, @ticket.FirstName</td>
+            <td>@ticket.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+            <td>@ticket.Status</td>
+        </tr>
+    }
+</table>
+
+<br/>
+<br/>
+@await Html.PartialAsync("Partial/CreateTicket", new TicketViewModel())
+
+@* Easy segment for showing any potential modelstate errors *@
+@foreach (var modelState in ViewData.ModelState.Values)
+{
+    @foreach (var error in modelState.Errors)
+    {
+        <text>@error.ErrorMessage</text>
+    }
+}

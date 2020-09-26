@@ -1,10 +1,17 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using NoSQL.DataAccess;
+using NoSQL.Models;
+using NoSQL.Services;
 
+// ReSharper disable once InvalidXmlDocComment
+/// <summary>
+/// Contains all classes related to processing API requests of the application, both internal and external.
+/// </summary>
 namespace NoSQL.API
 {
     public class Startup
@@ -19,10 +26,38 @@ namespace NoSQL.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            #region settings
+
+            // Required to inject connection string into DataAccess class library.
+            services.Configure<Settings>(Configuration.GetSection("MongoDbSettings"));
+
+            services.AddSingleton<ISettings>(serviceProvider =>
+                serviceProvider.GetRequiredService<IOptions<Settings>>().Value);
+
+            #endregion
+
+            #region repositories
+
+            services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+
+            #endregion
+
+            #region services
+
+            services.AddScoped<ITicketService, TicketService>();
+
+            #endregion
+            
+            #region database
+
+            services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+            
+            #endregion
+
+            services.AddControllers().AddNewtonsoftJson();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary> Configures the HTTP request pipeline. </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -40,7 +75,7 @@ namespace NoSQL.API
             {
                 endpoints.MapControllerRoute(
                     name: "Default",
-                    pattern: "/api/{controller=UserTest}/{action=Index}/{id?}");
+                    pattern: "/api/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
