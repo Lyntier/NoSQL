@@ -11,18 +11,18 @@
     <tr>
         <th>Id</th>
         <th>Subject</th>
-        <th>Name</th>
-        <th>Date</th>
-        <th>Status</th>
+        <th>User</th>
+        <th>Date reported</th>
+        <th>Deadline</th>
     </tr>
     @foreach (var ticket in Model)
     {
         <tr>
             <td>@ticket.Id</td>
             <td>@ticket.Subject</td>
-            <td>@ticket.LastName, @ticket.FirstName</td>
-            <td>@ticket.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
-            <td>@ticket.Status</td>
+            <td>@ticket.User.LastName, @ticket.User.FirstName</td>
+            <td>@ticket.DateReported.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+            <td>@ticket.Deadline</td>
         </tr>
     }
 </table>

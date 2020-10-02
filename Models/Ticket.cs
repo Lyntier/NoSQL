@@ -12,46 +12,25 @@ namespace NoSQL.Models
     [BsonCollection("tickets")]
     public class Ticket : Entity
     {
-        public Ticket()
-        {
-        }
-
-        /// <summary> Creates a Ticket object and generates an ObjectID to attach to this ticket. </summary>
-        public Ticket(string subject, string firstName, string lastName, DateTime date, int status)
-            : this(ObjectId.GenerateNewId().ToString(), subject, firstName, lastName, date, status)
-        {
-            Subject = subject;
-            FirstName = firstName;
-            LastName = lastName;
-            Date = date;
-            Status = status;
-        }
-
-        /// <summary> Creates a Ticket object, using an already existing ObjectID. </summary>
-        [JsonConstructor]
-        public Ticket(string id, string subject, string firstName, string lastName, DateTime date, int status)
-        {
-            Id = id;
-            Subject = subject;
-            FirstName = firstName;
-            LastName = lastName;
-            Date = date;
-            Status = status;
-        }
+        /// <summary> The date at which the ticket was created. </summary>
+        public DateTime DateReported { get; set; }
 
         /// <summary> A short description of the incident that led to the creation of the ticket. </summary>
         public string Subject { get; set; }
 
-        /// <summary> The first name of the person creating the ticket. </summary>
-        public string FirstName { get; set; }
+        /// <summary> The type of incident the ticket describes. </summary>
+        public IncidentType IncidentType { get; set; }
+        
+        /// <summary> The user that reported this incident. </summary>
+        public User User { get; set; }
+        
+        /// <summary> The priority for this ticket, indicating its importance. </summary>
+        public TicketPriority Priority { get; set; }
 
-        /// <summary> The last name of the person creating the ticket. </summary>
-        public string LastName { get; set; }
-
-        /// <summary> The date at which the ticket was created. </summary>
-        public DateTime Date { get; set; }
-
-        /// <summary> The current status of the ticket. </summary>
-        public int Status { get; set; }
+        /// <summary> The date at which the incident should be handled. </summary>
+        public DateTime Deadline { get; set; }
+        
+        /// <summary> A longer description of the ticket. </summary>
+        public string Description { get; set; }
     }
 }

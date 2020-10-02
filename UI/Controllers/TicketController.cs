@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using NoSQL.Models;
 using NoSQL.UI.ViewModels;
 
@@ -58,18 +60,7 @@ namespace NoSQL.UI.Controllers
         [HttpPost]
         public IActionResult CreateTicket(TicketViewModel ticketvm)
         {
-            Ticket ticket;
-            if (ticketvm.Id != null)
-            {
-                ticket = new Ticket(ticketvm.Id, ticketvm.Subject, ticketvm.FirstName, ticketvm.LastName, ticketvm.Date,
-                    ticketvm.Status);    
-            }
-            else
-            {
-                ticket = new Ticket(ticketvm.Subject, ticketvm.FirstName, ticketvm.LastName, ticketvm.Date,
-                    ticketvm.Status);
-            }
-            
+            Ticket ticket = ticketvm;
 
             using (var client = GetHttpClient())
             {
@@ -87,7 +78,7 @@ namespace NoSQL.UI.Controllers
                 }
             }
 
-            
+
             return RedirectToAction("Index");
         }
     }
