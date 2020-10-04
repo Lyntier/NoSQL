@@ -1,6 +1,6 @@
 ﻿namespace NoSQL.Models
 {
-    public class User
+    public class User : Entity
     {
         public string EmailAddress { get; set; }
         public string Password { get; set; }
