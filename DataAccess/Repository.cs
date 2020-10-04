@@ -44,6 +44,21 @@ namespace NoSQL.DataAccess
         }
 
         /// <inheritdoc cref="IRepository{TEntity}"/>
+        public TEntity Find(Func<TEntity, bool> filter)
+        {
+            return FindAll(filter)
+                .FirstOrDefault();
+        }
+
+        /// <inheritdoc cref="IRepository{TEntity}"/>
+        public IEnumerable<TEntity> FindAll(Func<TEntity, bool> filter)
+        {
+            return _collection
+                .AsQueryable()
+                .Where(filter);
+        }
+
+        /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Add(TEntity entity)
         {
             _collection.InsertOne(entity);

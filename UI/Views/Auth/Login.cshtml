@@ -1,0 +1,21 @@
+﻿@using System.Net.Http
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm("Login", "Auth", HttpMethod.Post))
+{
+    @Html.EditorForModel()
+    <button type="submit">Log in</button>
+    if (ViewData["apiError"] != null)
+    {
+        <text color="red">@ViewData["apiError"]</text>
+    }
+    if (ViewData["authError"] != null)
+    {
+        <text color="red">Could not log in with given parameters. Please try a different e-mail address and/or password.</text>
+    }
+}

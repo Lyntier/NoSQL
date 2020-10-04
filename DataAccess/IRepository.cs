@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NoSQL.Models;
 
@@ -19,6 +20,16 @@ namespace NoSQL.DataAccess
         /// Returns all entities of the corresponding type from the database.
         /// </summary>
         IEnumerable<TEntity> GetAll();
+
+        /// <summary>
+        /// Returns the first Entity that corresponds to this filter, or null if none are found.
+        /// </summary>
+        TEntity Find(Func<TEntity, bool> filter);
+
+        /// <summary>
+        /// Returns an IEnumerable of Entity that correspond to this filter. This list is empty if none are found.
+        /// </summary>
+        IEnumerable<TEntity> FindAll(Func<TEntity, bool> filter);
 
         /// <summary>
         /// Adds the given entity to the database, generating an ID for it.
