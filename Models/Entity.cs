@@ -26,5 +26,7 @@ namespace NoSQL.Models
         
         /// <inheritdoc cref="IEntity"/>
         public string Id { get; set; }
+
+        public static implicit operator bool(Entity self) => self != null;
     }
 }
