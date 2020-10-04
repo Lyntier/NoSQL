@@ -1,3 +1,4 @@
+using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -10,6 +11,7 @@ namespace NoSQL.Models
     /// Represents an Entity within the application. Entities are classes
     /// which will be stored as JSON objects in the Mongo database.
     /// </summary>
+    [Obsolete("The interface shouldn't be used as it lacks implicit comparisons. Use Entity directly instead.")]
     public interface IEntity
     {
         /// <summary>
@@ -26,5 +28,7 @@ namespace NoSQL.Models
         
         /// <inheritdoc cref="IEntity"/>
         public string Id { get; set; }
+
+        public static implicit operator bool(Entity self) => self != null;
     }
 }
