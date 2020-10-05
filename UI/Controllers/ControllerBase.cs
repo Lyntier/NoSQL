@@ -15,7 +15,7 @@ namespace NoSQL.UI.Controllers
         /// <summary>
         /// The URL to which the application should send HTTP requests.
         /// </summary>
-        protected const string BaseApiUrl = "https://localhost:3001/api/";
+        protected readonly string BaseApiUrl = Environment.GetEnvironmentVariable("APP_APIURL") ?? "https://localhost:3001/api/";
         
         /// <summary>
         /// Returns a HttpClient instance configured to use the API hosted at BaseApiUrl.
