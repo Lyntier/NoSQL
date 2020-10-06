@@ -1,5 +1,8 @@
-﻿namespace NoSQL.Models
+﻿using NoSQL.Models.Util;
+
+namespace NoSQL.Models
 {
+    [BsonCollection("users")]
     public class User : Entity
     {
         public string EmailAddress { get; set; }
