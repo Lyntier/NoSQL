@@ -7,6 +7,7 @@ namespace NoSQL.DataAccess
     {
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
+        string JwtSecret { get; set; }
     }
 
     /// <summary> Contains settings needed by this class library. </summary>
@@ -14,5 +15,6 @@ namespace NoSQL.DataAccess
     {
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
+        public string JwtSecret { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NoSQL.Models.Util;
+﻿using Newtonsoft.Json;
+using NoSQL.Models.Util;
 
 namespace NoSQL.Models
 {
@@ -6,6 +7,9 @@ namespace NoSQL.Models
     public class User : Entity
     {
         public string EmailAddress { get; set; }
+        
+        // Don't send password with each request.
+        [JsonIgnore]
         public string Password { get; set; }
         
         public string FirstName { get; set; }
