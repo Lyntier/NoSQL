@@ -11,6 +11,13 @@ namespace NoSQL.UI.ViewModels
 
         public UserViewModel(User user)
         {
+            EmailAddress = user.EmailAddress;
+            Password = user.Password;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Type = user.Type;
+            PhoneNumber = user.PhoneNumber;
+            Location = user.Location;
         }
 
         public string EmailAddress { get; set; }

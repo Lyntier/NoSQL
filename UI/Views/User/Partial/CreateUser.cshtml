@@ -1,13 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@model UserViewModel
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div>
-        @RenderBody()
-    </div>
-</body>
-</html>
+@using (Html.BeginForm("CreateUser", "User", FormMethod.Post))
+{
+    @Html.EditorForModel()
+    @* TODO Create dropdown for user selection *@
+    <br />
+    <button type="submit">Create user</button>
+}
