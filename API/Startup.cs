@@ -39,18 +39,21 @@ namespace NoSQL.API
             #region repositories
 
             services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
 
             #endregion
 
             #region services
 
             services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IUserService, UserService>();
 
             #endregion
             
             #region database
 
             services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
             
             #endregion
 
