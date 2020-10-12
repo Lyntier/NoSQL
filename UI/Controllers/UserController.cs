@@ -53,7 +53,7 @@ namespace NoSQL.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTicket(UserViewModel uservm)
+        public IActionResult CreateUser(UserViewModel uservm)
         {
             User user = uservm;
 
