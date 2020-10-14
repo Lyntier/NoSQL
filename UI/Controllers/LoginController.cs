@@ -73,13 +73,13 @@ namespace NoSQL.UI.Controllers
         }
         public ActionResult ResetPassword(string code, string email)
         {
-            ResetPasswordModel model = new ResetPasswordModel();
+            ResetPassword model = new ResetPassword();
             model.ReturnToken = code;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(ResetPasswordModel model)
+        public ActionResult ResetPassword(ResetPassword model)
         {
             if (ModelState.IsValid)
             {
