@@ -12,12 +12,8 @@ using NoSQL.UI.ViewModels;
 
 namespace NoSQL.UI.Controllers
 {
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
-        public UserController(ILogger<HomeController> logger) : base(logger)
-        {
-        }
-
         [HttpGet]
         public IActionResult Index()
         {

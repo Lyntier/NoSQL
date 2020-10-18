@@ -9,11 +9,8 @@ using WebMatrix.WebData;
 
 namespace NoSQL.UI.Controllers
 {
-    public class LoginController : ControllerBase
+    public class LoginController : Controller
     {
-        public LoginController(ILogger<HomeController> logger) : base(logger)
-        {
-        }
         public IActionResult Index()
         {
             return View();

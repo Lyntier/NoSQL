@@ -14,11 +14,8 @@ namespace NoSQL.UI.Controllers
     /// <summary>
     /// Handles all requests fired by the web application with regards to Tickets.
     /// </summary>
-    public class TicketController : ControllerBase
+    public class TicketController : Controller
     {
-        public TicketController(ILogger<HomeController> logger) : base(logger)
-        {
-        }
 
         /// <summary>
         /// Shows all tickets in the database and allows the addition of tickets.
