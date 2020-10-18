@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using KellermanSoftware.CompareNetObjects.TypeComparers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
@@ -39,8 +41,11 @@ namespace NoSQL.UI.Controllers
                 }
             }
 
+            var sortedTicketList = tickets.OrderByDescending(X => (int)(X.Priority)).ToList();
+                
+
             var ticketvm = new List<TicketViewModel>();
-            foreach (var ticket in tickets)
+            foreach (var ticket in sortedTicketList)
             {
                 ticketvm.Add(new TicketViewModel(ticket));
             }
