@@ -1,9 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using NoSQL.DataAccess;
+using NoSQL.Models;
+using NoSQL.Services;
 
 // ReSharper disable once InvalidXmlDocComment
 /// <summary> Contains all classes responsible for displaying the Web Application. </summary>
@@ -23,7 +29,35 @@ namespace NoSQL.UI
         {
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Login/Login/");
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+            
+            #region Dependency Injection
+
+            // Required to inject connection string into DataAccess class library.
+            services.Configure<Settings>(Configuration.GetSection("MongoDbSettings"));
+
+            services.AddSingleton<ISettings>(serviceProvider =>
+                serviceProvider.GetRequiredService<IOptions<Settings>>().Value);
+            
+            // Repositories and services
+            services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoginService, LoginService>();
+            
+            #endregion
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
@@ -52,6 +86,8 @@ namespace NoSQL.UI
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,0 +1,30 @@
+﻿@using System.Net.Http
+@model (string emailAddress, string password)
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Log in</h2>
+
+@if (TempData["authError"] != null)
+{
+    <text>@TempData["authError"]</text>
+}
+
+@if (TempData["registerError"] != null)
+{
+    <text>@TempData["registerError"]</text>
+}
+
+@using (Html.BeginForm("Login", "Login", HttpMethod.Post))
+{
+    @Html.LabelFor(m => m.emailAddress, "Email address")
+    @Html.EditorFor(m => m.emailAddress)
+    <br>
+    @Html.LabelFor(m => m.password, "Password")
+    @Html.EditorFor(m => m.password)
+    <br>
+    <button type="submit">Log in</button>
+}
