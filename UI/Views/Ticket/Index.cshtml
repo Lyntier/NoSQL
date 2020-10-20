@@ -7,6 +7,7 @@
 }
 
 <h2>Tickets</h2>
+<button>@Html.ActionLink("Create incident","CreateTicket","Ticket")</button>
 <table class="table">
     <tr>
         <th>Id</th>
@@ -29,7 +30,6 @@
 
 <br/>
 <br/>
-@await Html.PartialAsync("Partial/CreateTicket", new TicketViewModel())
 
 @* Easy segment for showing any potential modelstate errors *@
 @foreach (var modelState in ViewData.ModelState.Values)

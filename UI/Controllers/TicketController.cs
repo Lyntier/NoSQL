@@ -59,6 +59,11 @@ namespace NoSQL.UI.Controllers
 
             return View(ticketvm);
         }
+        public IActionResult CreateTicket()
+        {
+            TicketViewModel view = new TicketViewModel();
+            return View(view);
+        }
 
         /// <summary>
         /// Inserts a new ticket into the database with values set according to the values in the Html form.

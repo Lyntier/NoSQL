@@ -56,7 +56,13 @@ namespace NoSQL.UI.Controllers
 
             return View(uservm);
         }
+        public IActionResult CreateUser()
+        {
+            UserViewModel view = new UserViewModel();
 
+            return View(view);
+
+        }
         [HttpPost]
         public IActionResult CreateUser(UserViewModel uservm)
         {

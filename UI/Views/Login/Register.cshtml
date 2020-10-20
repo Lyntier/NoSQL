@@ -1,0 +1,15 @@
+﻿@using System.Net.Http
+@model UserViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("Register", "Login", HttpMethod.Post))
+{
+    @Html.EditorForModel()
+    <button type="submit">Register</button>
+}
