@@ -1,9 +1,12 @@
-﻿@model UserViewModel
+﻿@using NoSQL.Models
+@model UserViewModel
 
 @using (Html.BeginForm("CreateUser", "User", FormMethod.Post))
 {
     @Html.EditorForModel()
     @* TODO Create dropdown for user selection *@
+    
+    @Html.DropDownListFor(x => x.Location, Html.GetEnumSelectList<UserLocation>())
     <br />
     <button type="submit">Create user</button>
 }
