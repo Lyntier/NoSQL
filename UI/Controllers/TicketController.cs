@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
 using NoSQL.Models;
+using NoSQL.Services;
 using NoSQL.UI.ViewModels;
 
 namespace NoSQL.UI.Controllers
@@ -12,10 +10,13 @@ namespace NoSQL.UI.Controllers
     /// <summary>
     /// Handles all requests fired by the web application with regards to Tickets.
     /// </summary>
-    public class TicketController : ControllerBase
+    public class TicketController : Controller
     {
-        public TicketController(ILogger<HomeController> logger) : base(logger)
+        private ITicketService _ticketService;
+        
+        public TicketController(ITicketService ticketService)
         {
+            _ticketService = ticketService;
         }
 
         /// <summary>
@@ -24,23 +25,27 @@ namespace NoSQL.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<Ticket> tickets = new List<Ticket>();
+            // List<Ticket> tickets = new List<Ticket>();
 
-            using (var client = GetHttpClient())
-            {
-                var response = client.GetAsync("Ticket");
-                response.Wait();
+            // using (var client = GetHttpClient())
+            // {
+            //     var response = client.GetAsync("Ticket");
+            //     response.Wait();
+            //
+            //     var result = response.Result;
+            //     if (result.IsSuccessStatusCode)
+            //     {
+            //         var readTask = result.Content.ReadAsAsync<List<Ticket>>();
+            //         tickets = readTask.Result;
+            //     }
+            // }
 
-                var result = response.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<List<Ticket>>();
-                    tickets = readTask.Result;
-                }
-            }
+            var tickets = _ticketService.ListTickets();
+
+            var sortedTicketList = tickets.OrderByDescending(X => (int)(X.Priority)).ToList();
 
             var ticketvm = new List<TicketViewModel>();
-            foreach (var ticket in tickets)
+            foreach (var ticket in sortedTicketList)
             {
                 ticketvm.Add(new TicketViewModel(ticket));
             }
@@ -62,23 +67,24 @@ namespace NoSQL.UI.Controllers
         {
             Ticket ticket = ticketvm;
 
-            using (var client = GetHttpClient())
-            {
-                var response = client.PostAsJsonAsync("Ticket", ticket);
-                response.Wait();
+            // using (var client = GetHttpClient())
+            // {
+            //     var response = client.PostAsJsonAsync("Ticket", ticket);
+            //     response.Wait();
+            //
+            //     var result = response.Result;
+            //     if (!result.IsSuccessStatusCode)
+            //     {
+            //         TempData["apiError"] = result.Content.ReadAsStringAsync().Result;
+            //     }
+            //     else
+            //     {
+            //         TempData["apiError"] = null;
+            //     }
+            // }
 
-                var result = response.Result;
-                if (!result.IsSuccessStatusCode)
-                {
-                    TempData["apiError"] = result.Content.ReadAsStringAsync().Result;
-                }
-                else
-                {
-                    TempData["apiError"] = null;
-                }
-            }
-
-
+            _ticketService.CreateTicket(ticket);
+            
             return RedirectToAction("Index");
         }
     }

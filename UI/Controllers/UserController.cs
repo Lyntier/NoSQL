@@ -8,33 +8,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NoSQL.Models;
+using NoSQL.Services;
 using NoSQL.UI.ViewModels;
 
 namespace NoSQL.UI.Controllers
 {
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
-        public UserController(ILogger<HomeController> logger) : base(logger)
-        {
-        }
+        private IUserService _userService;
 
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+        
         [HttpGet]
         public IActionResult Index()
         {
-            List<User> users = new List<User>();
 
-            using (var client = GetHttpClient())
-            {
-                var response = client.GetAsync("User");
-                response.Wait();
+            // using (var client = GetHttpClient())
+            // {
+            //     var response = client.GetAsync("User");
+            //     response.Wait();
+            //
+            //     var result = response.Result;
+            //     if (result.IsSuccessStatusCode)
+            //     {
+            //         var readTask = result.Content.ReadAsAsync<List<User>>();
+            //         users = readTask.Result;
+            //     }
+            // }
 
-                var result = response.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<List<User>>();
-                    users = readTask.Result;
-                }
-            }
+            var users = _userService.ListUsers();
 
             var uservm = new List<UserViewModel>();
 
@@ -53,26 +58,28 @@ namespace NoSQL.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTicket(UserViewModel uservm)
+        public IActionResult CreateUser(UserViewModel uservm)
         {
             User user = uservm;
 
-            using (var client = GetHttpClient())
-            {
-                var response = client.PostAsJsonAsync("User", user);
-                response.Wait();
+            // using (var client = GetHttpClient())
+            // {
+            //     var response = client.PostAsJsonAsync("User", user);
+            //     response.Wait();
+            //
+            //     var result = response.Result;
+            //     if (!result.IsSuccessStatusCode)
+            //     {
+            //         TempData["apiError"] = result.Content.ReadAsStringAsync().Result;
+            //     }
+            //     else
+            //     {
+            //         TempData["apiError"] = null;
+            //     }
+            // }
+            
 
-                var result = response.Result;
-                if (!result.IsSuccessStatusCode)
-                {
-                    TempData["apiError"] = result.Content.ReadAsStringAsync().Result;
-                }
-                else
-                {
-                    TempData["apiError"] = null;
-                }
-            }
-
+            _userService.CreateUser(user);
 
             return RedirectToAction("Index");
         }

@@ -1,4 +1,5 @@
-﻿using NoSQL.Models.Util;
+﻿using AspNetCore.Identity.Mongo.Model;
+using NoSQL.Models.Util;
 
 namespace NoSQL.Models
 {
