@@ -30,7 +30,6 @@ namespace NoSQL.UI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
         public IActionResult AddTestUser()
         {
             User user = new User
@@ -76,7 +75,6 @@ namespace NoSQL.UI.Controllers
         [AllowAnonymous]
         public IActionResult Login(UserViewModel uservm)
         {
-            // TODO Use user details to set authorization
             var success = _loginService.Login(uservm.EmailAddress, uservm.Password, out User user);
 
             if (!success)
@@ -85,10 +83,13 @@ namespace NoSQL.UI.Controllers
                 return RedirectToAction("Login");
             }
 
+            // Two types of users: ServiceDeskEmployees and Employees.
+            var userRole = user.Type == UserType.ServiceDeskEmployee ? "ServiceDeskEmployee" : "Employee";
+            
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.EmailAddress),
-                // TODO Add role
+                new Claim(ClaimTypes.Role, userRole)
             };
             
             var claimsIdentity = new ClaimsIdentity(
@@ -131,7 +132,6 @@ namespace NoSQL.UI.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
