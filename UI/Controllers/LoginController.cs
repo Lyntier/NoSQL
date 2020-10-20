@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using NoSQL.Models;
 using NoSQL.Services;
+using NoSQL.UI.ViewModels;
 using WebMatrix.WebData;
 
 namespace NoSQL.UI.Controllers
@@ -68,14 +69,15 @@ namespace NoSQL.UI.Controllers
         public IActionResult Login()
         {
             
-            return View(("", ""));
+            return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login(string emailAddress, string password)
+        public IActionResult Login(UserViewModel uservm)
         {
-            var success = _loginService.Login(emailAddress, password, out User user);
+            // TODO Use user details to set authorization
+            var success = _loginService.Login(uservm.EmailAddress, uservm.Password, out User user);
 
             if (!success)
             {
@@ -85,7 +87,7 @@ namespace NoSQL.UI.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, emailAddress),
+                new Claim(ClaimTypes.Name, user.EmailAddress),
                 // TODO Add role
             };
             
@@ -102,6 +104,29 @@ namespace NoSQL.UI.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
+
+            return RedirectToAction("Index", "Home");
+        }
+        
+        
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(UserViewModel uservm)
+        {
+            User user = uservm;
+            _userService.CreateUser(user);
+            if (user.Id == null)
+            {
+                TempData["registerError"] = "Registration failed!";
+            }
+            else
+            {
+                TempData["registerError"] = "Registration successful!";
+            }
 
             return RedirectToAction("Index", "Home");
         }

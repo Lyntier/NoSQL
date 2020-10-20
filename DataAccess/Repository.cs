@@ -47,7 +47,7 @@ namespace NoSQL.DataAccess
 
         public IEnumerable<TEntity> Find(Func<TEntity, bool> filter)
         {
-            return _collection.AsQueryable()
+            return GetAll()
                 .Where(filter);
         }
 
