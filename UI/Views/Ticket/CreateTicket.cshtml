@@ -2,7 +2,18 @@
 
 @using (Html.BeginForm("CreateTicket", "Ticket", FormMethod.Post))
 {
-    @Html.EditorForModel()
-    @* TODO Create dropdown for user selection *@
-    <br /><button type="submit">Create ticket</button>
+    <h6>Subject</h6>
+    <input id="Subject" type="text" />
+    <br>
+    <br>
+    <h6>Type of incident</h6>
+    @Html.DropDownListFor(x => x.IncidentType, Html.GetEnumSelectList<NoSQL.Models.IncidentType>())
+    <br>
+    <br>
+    <h6>Priority</h6>
+    @Html.DropDownListFor(x => x.IncidentType, Html.GetEnumSelectList<NoSQL.Models.TicketPriority>())
+    <br>
+    <br>
+    <h6>Deadline</h6>
+    <button type="submit">Create ticket</button>
 }
