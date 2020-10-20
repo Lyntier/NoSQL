@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AspNetCore.Identity.Mongo.Mongo;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using NoSQL.Models;
 using NoSQL.Models.Util;
@@ -43,9 +45,23 @@ namespace NoSQL.DataAccess
             return _collection.AsQueryable();
         }
 
+        public IEnumerable<TEntity> Find(Func<TEntity, bool> filter)
+        {
+            return _collection.AsQueryable()
+                .Where(filter);
+        }
+
+        public TEntity FindOne(Func<TEntity, bool> filter)
+        {
+            return Find(filter)
+                .FirstOrDefault();
+        }
+
         /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Add(TEntity entity)
         {
+            // For some reason, ID isn't set on insert, so if it has to be set it'll be set here.
+            entity.Id ??= ObjectId.GenerateNewId().ToString();
             _collection.InsertOne(entity);
         }
 

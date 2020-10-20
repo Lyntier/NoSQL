@@ -5,15 +5,8 @@ using NoSQL.UI.ViewModels;
 
 namespace NoSQL.UI.Controllers
 {
-    public class HomeController : ControllerBase
+    public class HomeController : Controller
     {
-        // TODO Repurpose this controller.
-        // Currently showing very basic boilerplate.
-        
-        public HomeController(ILogger<HomeController> logger) : base(logger)
-        {
-        }
-
         public IActionResult Index()
         {
             return View();
