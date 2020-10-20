@@ -1,5 +1,5 @@
 ﻿@using System.Net.Http
-@model (string emailAddress, string password)
+@model UserViewModel
 
 @{
     ViewBag.Title = "title";
@@ -20,11 +20,11 @@
 
 @using (Html.BeginForm("Login", "Login", HttpMethod.Post))
 {
-    @Html.LabelFor(m => m.emailAddress, "Email address")
-    @Html.EditorFor(m => m.emailAddress)
+    @Html.LabelFor(m => m.EmailAddress, "Email address")
+    @Html.EditorFor(m => m.EmailAddress)
     <br>
-    @Html.LabelFor(m => m.password, "Password")
-    @Html.EditorFor(m => m.password)
+    @Html.LabelFor(m => m.Password, "Password")
+    @Html.EditorFor(m => m.Password)
     <br>
     <button type="submit">Log in</button>
 }
