@@ -3,31 +3,31 @@
 @using (Html.BeginForm("CreateUser", "User", FormMethod.Post))
 {
     <h3>Create user</h3>
-    <h6>Email Address</h6>
-    <input id="EmailAddress" type="text" />
+    @Html.LabelFor(x => x.EmailAddress)
+    @Html.EditorFor(x => x.EmailAddress)
     <br>
     <br>
-    <h6>First Name</h6>
-    <input id="FirstName" type="text" />
+    @Html.LabelFor(x => x.FirstName)
+    @Html.EditorFor(x => x.FirstName)
     <br>
     <br>
-    <h6>Last Name</h6>
-    <input id="LastName" type="text" />
+    @Html.LabelFor(x => x.LastName)
+    @Html.EditorFor(x => x.LastName)
     <br>
     <br>
-    <h6>Password</h6>
-    <input id="Password" type="text" />
+    @Html.LabelFor(x => x.Password)
+    @Html.EditorFor(x => x.Password)
     <br>
     <br>
-    <h6>Type of User</h6>
+    @Html.LabelFor(x => x.Type)
     @Html.DropDownListFor(x => x.Type, Html.GetEnumSelectList<NoSQL.Models.UserType>())
     <br>
     <br>
-    <h6>Phone Number</h6>
-    <input id="PhoneNumber" type="text" />
+    @Html.LabelFor(x => x.PhoneNumber)
+    @Html.EditorFor(x => x.PhoneNumber)
     <br>
     <br>
-    <h6>Type of User</h6>
+    @Html.LabelFor(x => x.Location)
     @Html.DropDownListFor(x => x.Location, Html.GetEnumSelectList<NoSQL.Models.UserLocation>())
     <br>
     <br>
