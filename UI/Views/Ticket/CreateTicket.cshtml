@@ -2,23 +2,20 @@
 
 @using (Html.BeginForm("CreateTicket", "Ticket", FormMethod.Post))
 {
-    <h6>Subject</h6>
-    <input id="Subject" type="text" />
+    @Html.LabelFor(x => x.Subject)
+    @Html.EditorFor(x => x.Subject)
     <br>
     <br>
-    <h6>Type of incident</h6>
+    @Html.LabelFor(x => x.IncidentType)
     @Html.DropDownListFor(x => x.IncidentType, Html.GetEnumSelectList<NoSQL.Models.IncidentType>())
     <br>
     <br>
-    <h6>Priority</h6>
-    @Html.DropDownListFor(x => x.IncidentType, Html.GetEnumSelectList<NoSQL.Models.TicketPriority>())
+    @Html.LabelFor(x => x.Priority)
+    @Html.DropDownListFor(x => x.Priority, Html.GetEnumSelectList<NoSQL.Models.TicketPriority>())
     <br>
     <br>
-    <h6>Deadline</h6>
-    <br>
-    <br>
-    <h6>Description</h6>
-    <textarea id="Description" rows="4" cols="30"></textarea>
+    @Html.LabelFor(x => x.Description)
+    @Html.EditorFor(x => x.Description)
     <br>
     <br>
     <button type="submit">Create ticket</button>

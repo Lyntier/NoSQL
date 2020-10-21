@@ -1,5 +1,6 @@
 using System;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using NoSQL.Models.Util;
 
@@ -10,6 +11,7 @@ namespace NoSQL.Models
     /// Tickets are collections of information on an incident.
     /// </summary>
     [BsonCollection("tickets")]
+    [BsonIgnoreExtraElements]
     public class Ticket : Entity
     {
         /// <summary> The date at which the ticket was created. </summary>
@@ -32,5 +34,7 @@ namespace NoSQL.Models
         
         /// <summary> A longer description of the ticket. </summary>
         public string Description { get; set; }
+
+        public bool IsOpen { get; set; }
     }
 }

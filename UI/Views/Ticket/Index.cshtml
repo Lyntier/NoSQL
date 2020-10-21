@@ -5,8 +5,13 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
-
 <h2>Tickets</h2>
+
+@if(TempData["removeTicket"]!= null)
+{
+    <text>Removed ticket successfully</text>
+}
+
 <button>@Html.ActionLink("Create incident","CreateTicket","Ticket")</button>
 <table class="table">
     <tr>
@@ -15,22 +20,26 @@
         <th>User</th>
         <th>Date reported</th>
         <th>Deadline</th>
+        <th>Remove</th>
     </tr>
     @foreach (var ticket in Model)
     {
-        <tr>
-            <td>@ticket.Id</td>
-            <td>@ticket.Subject</td>
-            <td>@ticket.User.LastName, @ticket.User.FirstName</td>
-            <td>@ticket.DateReported.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
-            <td>@ticket.Deadline</td>
-        </tr>
+     <tr>
+        <td>@ticket.Id</td>
+        <td>@ticket.Subject</td>
+        <td>@ticket.User.LastName, @ticket.User.FirstName</td>
+        <td>@ticket.DateReported.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+        <td>@ticket.Deadline</td>
+        <td>@Html.ActionLink(linkText: "Remove", actionName: "RemoveTicket", controllerName: "Ticket", routeValues: new
+       {
+           id = ticket.Id.ToString()
+       })</td>
+    </tr>
     }
 </table>
 
 <br/>
 <br/>
-
 @* Easy segment for showing any potential modelstate errors *@
 @foreach (var modelState in ViewData.ModelState.Values)
 {

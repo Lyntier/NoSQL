@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MongoDB.Bson;
 using NoSQL.Models;
 
 // ReSharper disable once InvalidXmlDocComment
@@ -19,5 +20,7 @@ namespace NoSQL.Services
         /// Adds the given ticket to the database.
         /// </summary>
         void CreateTicket(Ticket ticket);
+
+        void RemoveTicket(ObjectId id);
     }
 }

@@ -11,5 +11,7 @@ namespace NoSQL.Services
 
        
         void CreateUser(User user);
+
+        User GetByEmail(string emailAddress);
     }
 }

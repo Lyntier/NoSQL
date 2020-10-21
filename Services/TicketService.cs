@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using MongoDB.Bson;
 using NoSQL.DataAccess;
 using NoSQL.Models;
 
@@ -25,6 +27,12 @@ namespace NoSQL.Services
         public void CreateTicket(Ticket ticket)
         {
             _ticketRepository.Add(ticket);
+        }
+        public void RemoveTicket(ObjectId id)
+        {
+            var ticket = _ticketRepository.Find(u =>
+            u.Id.Equals(id)).FirstOrDefault();
+            _ticketRepository.Delete(ticket);
         }
     }
 }
