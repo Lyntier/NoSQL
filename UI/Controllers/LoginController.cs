@@ -63,7 +63,7 @@ namespace NoSQL.UI.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return RedirectToAction("Login"); // ???
+            return RedirectToAction("Login");
         }
 
         [HttpGet]
