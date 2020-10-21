@@ -21,6 +21,8 @@
                 <div class="col-md-6"><a href="@Url.Action("Logout", "Login")">Log out</a></div>
             }
         </div>
+        @if (((ClaimsIdentity)User.Identity).IsAuthenticated)
+        {
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav nav-fill w-100 nav-justified">
@@ -28,14 +30,15 @@
                         <a href="@Url.Action("Index", "Home")" class="nav-link">Dashboard</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a href="@Url.Action("Index","Ticket")" class="nav-link">Incident Management</a>
+                        <a href="@Url.Action("Index", "Ticket")" class="nav-link">Incident Management</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a href="@Url.Action("Index","User")" class="nav-link">User Management</a>
+                        <a href="@Url.Action("Index", "User")" class="nav-link">User Management</a>
                     </li>
                 </ul>
             </div>
         </nav>
+        }
     </header>
     <main role="main" class="pb-3">
         @RenderBody()
