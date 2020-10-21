@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -13,7 +14,13 @@
 
     <header>
 
-        <a href="#" class="navbar-brand">TopDesk</a>
+        <div class="row">
+            <div class="col-md-6"><a href="#" class="navbar-brand">TopDesk</a></div>
+            @if (((ClaimsIdentity) User.Identity).IsAuthenticated)
+            {
+                <div class="col-md-6"><a href="@Url.Action("Logout", "Login")">Log out</a></div>
+            }
+        </div>
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav nav-fill w-100 nav-justified">
