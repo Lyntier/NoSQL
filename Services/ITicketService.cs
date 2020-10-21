@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NoSQL.Models;
 
@@ -19,5 +20,11 @@ namespace NoSQL.Services
         /// Adds the given ticket to the database.
         /// </summary>
         void CreateTicket(Ticket ticket);
+
+        IEnumerable<Ticket> FindTickets(Func<Ticket, bool> filter);
+
+        IEnumerable<Ticket> FindTicketsByUser(User user);
+
+        IEnumerable<Ticket> FindTicketsByUser(string emailAddress);
     }
 }

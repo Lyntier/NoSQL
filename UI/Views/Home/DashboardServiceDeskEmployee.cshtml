@@ -1,4 +1,7 @@
 ﻿@using System.Net.Http
+@using System.Globalization
+@model List<TicketViewModel>
+
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
@@ -18,10 +21,58 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            
+            <svg
+                class="progress-ring"
+                height="120"
+                width="120">
+                <circle class="progress-ring__circle"
+                        stroke-width="5"
+                        fill="transparent"
+                        r="50"
+                        cx="60"
+                        cy="60"/>
+            </svg>
         </div>
         <div class="col-md-6">
-            
+            <svg
+                class="progress-ring"
+                height="120"
+                width="120">
+                <circle class="progress-ring__circle"
+                        stroke-width="5"
+                        fill="transparent"
+                        r="50"
+                        cx="60"
+                        cy="60"/>
+            </svg>
         </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Subject</th>
+                <th>User</th>
+                <th>Date reported</th>
+                <th>Deadline</th>
+            </tr>
+            @if (Model.Count == 0)
+            {
+                <td colspan="5">There are no tickets to show.</td>
+            }
+            else
+            {
+                foreach (var ticket in Model)
+                {
+                    <tr>
+                        <td>@ticket.Id</td>
+                        <td>@ticket.Subject</td>
+                        <td>@ticket.User.LastName, @ticket.User.FirstName</td>
+                        <td>@ticket.DateReported.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+                        <td>@ticket.Deadline</td>
+                    </tr>
+                }
+            }
+        </table>
     </div>
 </div>
