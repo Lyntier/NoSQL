@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using NoSQL.DataAccess;
 using NoSQL.Models;
 using NoSQL.Services;
+using NoSQL.UI.Requirements;
 
 // ReSharper disable once InvalidXmlDocComment
 /// <summary> Contains all classes responsible for displaying the Web Application. </summary>
@@ -39,7 +40,14 @@ namespace NoSQL.UI
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
+                
+                options.AddPolicy("ServiceDesk", policy => 
+                    policy.Requirements.Add(new RoleRequirement("ServiceDeskEmployee")));
             });
+
+            services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
+            
+            
             
             #region Dependency Injection
 
