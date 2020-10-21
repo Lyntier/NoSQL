@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using NoSQL.Models.Util;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NoSQL.Models
 {
-    public class ResetPassword
+    [BsonCollection("resetpassword")]
+    [BsonIgnoreExtraElements]
+    public class ResetPassword : Entity
     {
         public string ReturnToken { get; set; }
-        [ScaffoldColumn(false)] public string Password { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -68,7 +68,7 @@ namespace NoSQL.DataAccess
         /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Update(TEntity entity)
         {
-            
+            _collection.ReplaceOne(x => x.Id.Equals(entity.Id), entity);
         }
 
         /// <inheritdoc cref="IRepository{TEntity}"/>
