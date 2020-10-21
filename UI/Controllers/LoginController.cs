@@ -64,7 +64,7 @@ namespace NoSQL.UI.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return View(); // ???
+            return RedirectToAction("Login");
         }
 
         [HttpGet]
@@ -161,7 +161,7 @@ namespace NoSQL.UI.Controllers
                     {
                         // If user does not exist or is not confirmed.  
 
-                        return View("Index");
+                        return View("Login");
 
                     }
                     else
