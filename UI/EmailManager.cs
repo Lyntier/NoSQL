@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -8,17 +9,23 @@ using System.Threading.Tasks;
 
 namespace NoSQL.UI
 {
-    public class EmailManager
+    public class EmailManager : IEmailManager
     {
-        public static void AppSettings(out string UserID, out string Password, out string SMTPPort, out string Host)
+        IConfiguration _config;
+
+        public EmailManager(IConfiguration config)
         {
-            UserID = ConfigurationManager.AppSettings.Get("UserID");
-            Password = ConfigurationManager.AppSettings.Get("Password");
-            SMTPPort = ConfigurationManager.AppSettings.Get("SMTPPort");
-            Host = ConfigurationManager.AppSettings.Get("Host");
+            _config = config;
+        }
+        public void AppSettings(out string UserID, out string Password, out string SMTPPort, out string Host)
+        {
+            UserID = _config.GetValue<string> ("UserID");
+            Password = _config.GetValue<string>("Password");
+            SMTPPort = _config.GetValue<string>("SMTPPort");
+            Host = _config.GetValue<string>("Host");
         }
 
-        public static void SendEmail(string From, string Subject, string Body, string To, string UserID, string Password, string SMTPPort, string Host)
+        public void SendEmail(string From, string Subject, string Body, string To, string UserID, string Password, string SMTPPort, string Host)
         {
             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
             mail.To.Add(To);

@@ -24,6 +24,7 @@ namespace NoSQL.UI.ViewModels
             Priority = ticket.Priority;
             Deadline = ticket.Deadline;
             Description = ticket.Description;
+            IsOpen = ticket.IsOpen;
         }
 
         [ScaffoldColumn(false)]
@@ -52,6 +53,8 @@ namespace NoSQL.UI.ViewModels
 
         /// <summary> A longer description of the ticket. </summary>
         public string Description { get; set; }
+
+        public bool IsOpen { get; set; }
         
         public static implicit operator Ticket(TicketViewModel ticketvm)
         {
@@ -67,7 +70,8 @@ namespace NoSQL.UI.ViewModels
                 IncidentType = ticketvm.IncidentType,
                 Priority = ticketvm.Priority,
                 Subject = ticketvm.Subject,
-                User = ticketvm.User
+                User = ticketvm.User,
+                IsOpen = ticketvm.IsOpen
             };
         }
     }

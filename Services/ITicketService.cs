@@ -29,5 +29,7 @@ namespace NoSQL.Services
         IEnumerable<Ticket> FindTicketsByUser(string emailAddress);
 
         void RemoveTicket(ObjectId id);
+
+        void UpdateStatus(ObjectId id);
     }
 }

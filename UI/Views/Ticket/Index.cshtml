@@ -20,21 +20,32 @@
         <th>User</th>
         <th>Date reported</th>
         <th>Deadline</th>
+        <th>Description</th>
         <th>Remove</th>
+        <th>Close Ticket</th>
     </tr>
     @foreach (var ticket in Model)
     {
-     <tr>
-        <td>@ticket.Id</td>
-        <td>@ticket.Subject</td>
-        <td>@ticket.User.LastName, @ticket.User.FirstName</td>
-        <td>@ticket.DateReported.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
-        <td>@ticket.Deadline</td>
-        <td>@Html.ActionLink(linkText: "Remove", actionName: "RemoveTicket", controllerName: "Ticket", routeValues: new
-       {
-           id = ticket.Id.ToString()
-       })</td>
-    </tr>
+<tr>
+    <td>@ticket.Id</td>
+    <td>@ticket.Subject</td>
+    <td>@ticket.User.LastName, @ticket.User.FirstName</td>
+    <td>@ticket.DateReported.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+    <td>@ticket.Deadline</td>
+    <td>@ticket.Description</td>
+    <td>
+        @Html.ActionLink(linkText: "Remove", actionName: "RemoveTicket", controllerName: "Ticket", routeValues: new
+        {
+            id = ticket.Id.ToString()   
+        })
+    </td>
+    <td>
+        @Html.ActionLink(linkText: "Close", actionName: "ChangeStatus", controllerName: "Ticket", routeValues: new
+        {
+            id = ticket.Id.ToString()
+        })
+    </td>
+   </tr>
     }
 </table>
 

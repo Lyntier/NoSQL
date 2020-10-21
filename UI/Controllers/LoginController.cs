@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using NoSQL.Models;
 using NoSQL.Services;
 using NoSQL.UI.ViewModels;
@@ -22,11 +23,13 @@ namespace NoSQL.UI.Controllers
         ILoginService _loginService;
 
         private IUserService _userService;
+        private IEmailManager _emailManager;
         
-        public LoginController(ILoginService loginService, IUserService userService)
+        public LoginController(ILoginService loginService, IUserService userService,IEmailManager emailManager)
         {
             _loginService = loginService;
             _userService = userService;
+            _emailManager = emailManager;
         }
 
         [AllowAnonymous]
@@ -144,15 +147,16 @@ namespace NoSQL.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult ForgotPassword(string UserName)
+        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
+            var UserName = model.Email;
             if (ModelState.IsValid)
             {
-
-                if (WebSecurity.UserExists(UserName))
+                var user = _userService.GetByEmail(UserName);
+                if (user)
                 {
                     string To = UserName, UserID, Password, SMTPPort, Host;
-                    string token = WebSecurity.GeneratePasswordResetToken(UserName);
+                    string token = ObjectId.GenerateNewId().ToString();
                     if (token == null)
                     {
                         // If user does not exist or is not confirmed.  
@@ -162,9 +166,10 @@ namespace NoSQL.UI.Controllers
                     }
                     else
                     {
+                        _loginService.SaveToken(token,UserName);
                         //Create URL with above token  
 
-                        var lnkHref = "<a href='" + Url.Action("ResetPassword", "Account", new { email = UserName, code = token }, "http") + "'>Reset Password</a>";
+                        var lnkHref = "<a href='" + Url.Action("ResetPassword", "Login", new {code = token }, "https") + "'>Reset Password</a>";
 
 
                         //HTML Template for Send email  
@@ -176,12 +181,12 @@ namespace NoSQL.UI.Controllers
 
                         //Get and set the AppSettings using configuration manager.  
 
-                        EmailManager.AppSettings(out UserID, out Password, out SMTPPort, out Host);
+                       _emailManager.AppSettings(out UserID, out Password, out SMTPPort, out Host);
 
 
                         //Call send email methods.  
 
-                        EmailManager.SendEmail(UserID, subject, body, To, UserID, Password, SMTPPort, Host);
+                        _emailManager.SendEmail(UserID, subject, body, To, UserID, Password, SMTPPort, Host);
 
                     }
 
@@ -190,29 +195,24 @@ namespace NoSQL.UI.Controllers
             }
             return View();
         }
-        public ActionResult ResetPassword(string code, string email)
+        public ActionResult ResetPassword(string code)
         {
-            ResetPassword model = new ResetPassword();
-            model.ReturnToken = code;
+            ResetPasswordViewModel model = new ResetPasswordViewModel();
+            model.Token = code;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(ResetPassword model)
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
-                bool resetResponse = WebSecurity.ResetPassword(model.ReturnToken, model.Password);
-                if (resetResponse)
+                if (model.NewPassword.Equals(model.ConfirmPassword))
                 {
-                    ViewBag.Message = "Successfully Changed";
-                }
-                else
-                {
-                    ViewBag.Message = "Something went horribly wrong!";
+                    _loginService.ResetPassword(model.Token, model.NewPassword);
                 }
             }
-            return View(model);
+            return RedirectToAction("Index","Home");
         }
 
     }

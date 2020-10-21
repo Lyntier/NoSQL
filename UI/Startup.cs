@@ -56,10 +56,12 @@ namespace NoSQL.UI
 
             services.AddSingleton<ISettings>(serviceProvider =>
                 serviceProvider.GetRequiredService<IOptions<Settings>>().Value);
+            services.AddSingleton<IEmailManager, EmailManager>();
             
             // Repositories and services
             services.AddScoped<IRepository<Ticket>, Repository<Ticket>>();
             services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<ResetPassword>, Repository<ResetPassword>>();
             
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IUserService, UserService>();
