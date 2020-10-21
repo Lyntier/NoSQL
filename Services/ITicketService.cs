@@ -22,5 +22,7 @@ namespace NoSQL.Services
         void CreateTicket(Ticket ticket);
 
         void RemoveTicket(ObjectId id);
+
+        void UpdateStatus(ObjectId id);
     }
 }

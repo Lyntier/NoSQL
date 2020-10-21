@@ -68,7 +68,7 @@ namespace NoSQL.DataAccess
         /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <inheritdoc cref="IRepository{TEntity}"/>

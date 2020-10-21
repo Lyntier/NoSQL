@@ -34,5 +34,12 @@ namespace NoSQL.Services
             u.Id.Equals(id)).FirstOrDefault();
             _ticketRepository.Delete(ticket);
         }
+
+        public void UpdateStatus(ObjectId id)
+        {
+            var ticket = _ticketRepository.Find(u => u.Id.Equals(id)).FirstOrDefault();
+            ticket.IsOpen = false;
+            _ticketRepository.Update(ticket);
+        }
     }
 }

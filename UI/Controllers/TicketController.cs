@@ -100,5 +100,12 @@ namespace NoSQL.UI.Controllers
             TempData["removeTicket"] = "Successfully deleted ticket.";
             return RedirectToAction("Index");
         }
+
+        public IActionResult ChangeStatus(string id)
+        {
+            ObjectId Id = new ObjectId(id);
+            _ticketService.UpdateStatus(Id);
+            return RedirectToAction("Index");
+        }
     }
 }
