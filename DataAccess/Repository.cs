@@ -61,7 +61,7 @@ namespace NoSQL.DataAccess
         public void Add(TEntity entity)
         {
             // For some reason, ID isn't set on insert, so if it has to be set it'll be set here.
-            entity.Id ??= ObjectId.GenerateNewId().ToString();
+            entity.Id = ObjectId.GenerateNewId();
             _collection.InsertOne(entity);
         }
 
@@ -74,7 +74,7 @@ namespace NoSQL.DataAccess
         /// <inheritdoc cref="IRepository{TEntity}"/>
         public void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            _collection.DeleteOne(x => x.Id.Equals(entity.Id));
         }
 
         #endregion

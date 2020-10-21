@@ -36,6 +36,11 @@ namespace NoSQL.UI.ViewModels
 
         public static implicit operator User(UserViewModel uservm)
         {
+            var isVmNull = uservm == null;
+            if(isVmNull)
+            {
+                return null;
+            }
             return new User
             {
                 EmailAddress = uservm.EmailAddress,

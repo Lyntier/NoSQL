@@ -27,7 +27,7 @@ namespace NoSQL.UI.ViewModels
         }
 
         [ScaffoldColumn(false)]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
         
         /// <summary> The date at which the ticket was created. </summary>
         public DateTime DateReported { get; set; }
@@ -45,13 +45,17 @@ namespace NoSQL.UI.ViewModels
         public TicketPriority Priority { get; set; }
 
         /// <summary> The date at which the incident should be handled. </summary>
+        [Display(Name = "Deadline")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Deadline { get; set; }
-        
+
         /// <summary> A longer description of the ticket. </summary>
         public string Description { get; set; }
         
         public static implicit operator Ticket(TicketViewModel ticketvm)
         {
+            var isIdNull = ticketvm.Id == null;
             return new Ticket
             {
                 // If no date was assigned to the ticket, a new date object will be created and start at year 1.
@@ -59,7 +63,7 @@ namespace NoSQL.UI.ViewModels
                 DateReported = ticketvm.DateReported.Year == 1 ? DateTime.Now : ticketvm.DateReported,
                 Deadline = ticketvm.Deadline,
                 Description = ticketvm.Description,
-                Id = ticketvm.Id ?? ObjectId.GenerateNewId().ToString(),
+                Id = isIdNull ? ObjectId.GenerateNewId() : ticketvm.Id,
                 IncidentType = ticketvm.IncidentType,
                 Priority = ticketvm.Priority,
                 Subject = ticketvm.Subject,

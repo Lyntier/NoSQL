@@ -2,6 +2,7 @@
 using NoSQL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NoSQL.Services
@@ -23,6 +24,12 @@ namespace NoSQL.Services
         public IEnumerable<User> ListUsers()
         {
             return _userRepository.GetAll();
+        }
+
+        public User GetByEmail(string emailAddress)
+        {
+            return _userRepository.Find(u =>
+            u.EmailAddress.Equals(emailAddress)).FirstOrDefault();
         }
     }
 }

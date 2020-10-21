@@ -1,9 +1,11 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
+using MongoDB.Bson.Serialization.Attributes;
 using NoSQL.Models.Util;
 
 namespace NoSQL.Models
 {
     [BsonCollection("users")]
+    [BsonIgnoreExtraElements]
     public class User : Entity
     {
         public string EmailAddress { get; set; }

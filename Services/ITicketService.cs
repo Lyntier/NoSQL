@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MongoDB.Bson;
 using NoSQL.Models;
 
 // ReSharper disable once InvalidXmlDocComment
@@ -26,5 +27,7 @@ namespace NoSQL.Services
         IEnumerable<Ticket> FindTicketsByUser(User user);
 
         IEnumerable<Ticket> FindTicketsByUser(string emailAddress);
+
+        void RemoveTicket(ObjectId id);
     }
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using MongoDB.Bson;
 using NoSQL.DataAccess;
 using NoSQL.Models;
 
@@ -45,6 +47,13 @@ namespace NoSQL.Services
             return _ticketRepository.Find(ticket =>
                 ticket.User.EmailAddress.Equals(emailAddress)
             );
+        }
+        
+        public void RemoveTicket(ObjectId id)
+        {
+            var ticket = _ticketRepository.Find(u =>
+            u.Id.Equals(id)).FirstOrDefault();
+            _ticketRepository.Delete(ticket);
         }
     }
 }
