@@ -112,13 +112,14 @@ namespace NoSQL.UI.Controllers
             return RedirectToAction("Index", "Home");
         }
         
-        
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Register(UserViewModel uservm)
         {
             User user = uservm;
@@ -141,12 +142,14 @@ namespace NoSQL.UI.Controllers
             return RedirectToAction("Login", HttpMethod.Post);
         }
 
+        [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             var UserName = model.Email;
@@ -195,6 +198,8 @@ namespace NoSQL.UI.Controllers
             }
             return View();
         }
+        
+        [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
             ResetPasswordViewModel model = new ResetPasswordViewModel();
@@ -202,6 +207,7 @@ namespace NoSQL.UI.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult ResetPassword(ResetPasswordViewModel model)
         {
