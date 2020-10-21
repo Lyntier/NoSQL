@@ -30,21 +30,6 @@ namespace NoSQL.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            // List<Ticket> tickets = new List<Ticket>();
-
-            // using (var client = GetHttpClient())
-            // {
-            //     var response = client.GetAsync("Ticket");
-            //     response.Wait();
-            //
-            //     var result = response.Result;
-            //     if (result.IsSuccessStatusCode)
-            //     {
-            //         var readTask = result.Content.ReadAsAsync<List<Ticket>>();
-            //         tickets = readTask.Result;
-            //     }
-            // }
-
             var tickets = _ticketService.ListTickets();
 
             var sortedTicketList = tickets.OrderByDescending(X => (int)(X.Priority)).ToList();
@@ -52,7 +37,10 @@ namespace NoSQL.UI.Controllers
             var ticketvm = new List<TicketViewModel>();
             foreach (var ticket in sortedTicketList)
             {
-                ticketvm.Add(new TicketViewModel(ticket));
+                if(ticket.IsOpen)
+                {
+                    ticketvm.Add(new TicketViewModel(ticket));
+                }   
             }
 
             if (TempData["apiError"] != null)
@@ -97,21 +85,8 @@ namespace NoSQL.UI.Controllers
                     break;
                 }
             ticket.Deadline = ticket.Deadline.AddHours(2);
-            // using (var client = GetHttpClient())
-            // {
-            //     var response = client.PostAsJsonAsync("Ticket", ticket);
-            //     response.Wait();
-            //
-            //     var result = response.Result;
-            //     if (!result.IsSuccessStatusCode)
-            //     {
-            //         TempData["apiError"] = result.Content.ReadAsStringAsync().Result;
-            //     }
-            //     else
-            //     {
-            //         TempData["apiError"] = null;
-            //     }
-            // }
+            ticket.IsOpen = true;
+           
 
             _ticketService.CreateTicket(ticket);
             
